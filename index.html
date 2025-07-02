@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora para Jubilados MPPE 2025</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      padding-top: 80px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 400px;
+      position: relative;
+    }
+    img.logo {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 70px;
+    }
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+    }
+    label, input, button {
+      display: block;
+      margin: 10px auto;
+      width: 90%;
+    }
+    input {
+      padding: 10px;
+      font-size: 1rem;
+    }
+    button {
+      padding: 10px;
+      background-color: #004aad;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .reset-btn {
+      background-color: #d90000;
+      margin-top: 5px;
+    }
+    .resultado {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .detalle {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: #333;
+    }
+    .advertencia {
+      color: #d90000;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="logo gremio.png" alt="Logo Gremio Docente" class="logo">
+    <h1>Calculadora para Jubilados MPPE 2025</h1>
+    <label for="salario">Ingrese su salario neto quincenal (sin deducciones):</label>
+    <input type="number" id="salario" placeholder="Ej: 850,00">
+    <button onclick="calcularVacacionesJubilado()">Calcular Monto Vacacional</button>
+    <button class="reset-btn" onclick="resetearFormulario()">Reiniciar</button>
+    <div class="advertencia">*Debe ingresar su ingreso neto quincenal sin deducciones.</div>
+    <div class="resultado" id="resultado"></div>
+    <div class="detalle" id="detalle"></div>
+  </div>
+
+  <script>
+    function calcularVacacionesJubilado() {
+      const salario = parseFloat(document.getElementById('salario').value);
+      if (isNaN(salario) || salario <= 0) {
+        document.getElementById('resultado').innerText = 'Por favor, ingrese un salario válido.';
+        document.getElementById('detalle').innerText = '';
+        return;
+      }
+
+      const salarioDiario = salario / 15;
+      const montoVacacional = salarioDiario * 60; // Jubilados: 60 días
+      const bonoEspecial = 4320; // 40 USD al BCV
+      const bonoVacacionesPatria = 5400; // 50 USD al BCV
+      const total = montoVacacional + bonoEspecial + bonoVacacionesPatria;
+
+      document.getElementById('resultado').innerText = `Total estimado a cobrar: Bs ${total.toFixed(2)}`;
+      document.getElementById('detalle').innerHTML = `Desglose:<br>
+        Vacaciones (60 días): Bs ${montoVacacional.toFixed(2)}<br>
+        Bono especial (MPPE): Bs ${bonoEspecial.toFixed(2)}<br>
+        Bono especial de vacaciones (Patria): Bs ${bonoVacacionesPatria.toFixed(2)}`;
+    }
+
+    function resetearFormulario() {
+      document.getElementById('salario').value = '';
+      document.getElementById('resultado').innerText = '';
+      document.getElementById('detalle').innerText = '';
+    }
+  </script>
+</body>
+</html>
